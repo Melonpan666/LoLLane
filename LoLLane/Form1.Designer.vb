@@ -40,6 +40,8 @@ Partial Class Form1
         Me.Button_Mastery = New System.Windows.Forms.Button()
         Me.Button_Skill = New System.Windows.Forms.Button()
         Me.Button_Rune = New System.Windows.Forms.Button()
+        Me.Button_CopyJP = New System.Windows.Forms.Button()
+        Me.CheckBox_Topmost = New System.Windows.Forms.CheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -58,6 +60,7 @@ Partial Class Form1
         'ComboBox1
         '
         Me.ComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(37, Byte), Integer))
+        Me.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.ComboBox1.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ComboBox1.ForeColor = System.Drawing.SystemColors.Window
         Me.ComboBox1.FormattingEnabled = True
@@ -152,7 +155,7 @@ Partial Class Form1
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(59, 12)
         Me.Label1.TabIndex = 9
-        Me.Label1.Text = "Ver.β.01"
+        Me.Label1.Text = "Ver.β.02"
         '
         'Label2
         '
@@ -163,7 +166,7 @@ Partial Class Form1
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(68, 12)
         Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Patch 6.10"
+        Me.Label2.Text = "Patch 6.11"
         '
         'TimerWeb2
         '
@@ -207,12 +210,38 @@ Partial Class Form1
         Me.Button_Rune.Text = "Rune"
         Me.Button_Rune.UseVisualStyleBackColor = False
         '
+        'Button_CopyJP
+        '
+        Me.Button_CopyJP.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.Button_CopyJP.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button_CopyJP.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
+        Me.Button_CopyJP.Location = New System.Drawing.Point(312, 56)
+        Me.Button_CopyJP.Name = "Button_CopyJP"
+        Me.Button_CopyJP.Size = New System.Drawing.Size(90, 28)
+        Me.Button_CopyJP.TabIndex = 14
+        Me.Button_CopyJP.Text = "CopyJP"
+        Me.Button_CopyJP.UseVisualStyleBackColor = False
+        '
+        'CheckBox_Topmost
+        '
+        Me.CheckBox_Topmost.AutoSize = True
+        Me.CheckBox_Topmost.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.CheckBox_Topmost.ForeColor = System.Drawing.SystemColors.Window
+        Me.CheckBox_Topmost.Location = New System.Drawing.Point(732, 56)
+        Me.CheckBox_Topmost.Name = "CheckBox_Topmost"
+        Me.CheckBox_Topmost.Size = New System.Drawing.Size(75, 16)
+        Me.CheckBox_Topmost.TabIndex = 15
+        Me.CheckBox_Topmost.Text = "TopMost"
+        Me.CheckBox_Topmost.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(819, 549)
+        Me.Controls.Add(Me.CheckBox_Topmost)
+        Me.Controls.Add(Me.Button_CopyJP)
         Me.Controls.Add(Me.Button_Rune)
         Me.Controls.Add(Me.Button_Skill)
         Me.Controls.Add(Me.Button_Mastery)
@@ -237,7 +266,6 @@ Partial Class Form1
     End Sub
 
     Friend WithEvents Button1 As Button
-    Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Button2 As Button
     Friend WithEvents ComboBox2 As ComboBox
     Friend WithEvents WebBrowser1 As WebBrowser
@@ -252,4 +280,7 @@ Partial Class Form1
     Friend WithEvents Button_Mastery As Button
     Friend WithEvents Button_Skill As Button
     Friend WithEvents Button_Rune As Button
+    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents Button_CopyJP As Button
+    Friend WithEvents CheckBox_Topmost As CheckBox
 End Class
