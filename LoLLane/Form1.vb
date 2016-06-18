@@ -10,12 +10,12 @@ Public Class Form1
     Private Const LANE_ADC As Integer = 4
     Private Const LANE_SUP As Integer = 5
     ' -- ロール
-    Private Const ROLE_ASSASSIN As Integer = 1
-    Private Const ROLE_SUPPORT As Integer = 2
-    Private Const ROLE_TANK As Integer = 3
-    Private Const ROLE_FIGHTER As Integer = 4
-    Private Const ROLE_MARKSMAN As Integer = 5
-    Private Const ROLE_MAGE As Integer = 6
+    Private Const ROLE_ASSASSIN As Byte = &H1
+    Private Const ROLE_FIGHTER As Byte = &H2
+    Private Const ROLE_MAGE As Byte = &H4
+    Private Const ROLE_SUPPORT As Byte = &H8
+    Private Const ROLE_TANK As Byte = &H10
+    Private Const ROLE_MARKSMAN As Byte = &H20
     ' Web 検索文字列
     Private Const SEARCH_BUILD As String = "Most Frequent Core Build"
     Private Const SEARCH_COUNTER As String = "Weak Against"
@@ -38,10 +38,10 @@ Public Class Form1
         Public Name As String      ' チャンプ名
         Public JpName As String      ' チャンプ日本語名
         Public Lane() As Integer     ' レーン
-        Public Role() As Integer     ' ロール
+        Public Role() As Byte     ' ロール
         Sub New(ByVal n As String, ByVal jn As String,
                 ByVal l1 As Integer, ByVal l2 As Integer, ByVal l3 As Integer, ByVal l4 As Integer, ByVal l5 As Integer,
-                ByVal r1 As Integer, ByVal r2 As Integer
+                ByVal r1 As Byte, ByVal r2 As Byte
             )
             Me.Name = n
             Me.JpName = jn
@@ -265,9 +265,29 @@ Public Class Form1
         ToolTip1.ShowAlways = True
 
         'ToolTip設定
-        ToolTip1.SetToolTip(Button_CopyJP, "Copy JP-Name to ClipBoard")
-        ToolTip1.SetToolTip(CheckBox_Topmost, "Display This Window as Top Most")
+        ToolTip1.SetToolTip(CheckBox_Topmost, "Display this window as top most")
+        ToolTip1.SetToolTip(PictureBox1, "Click the champion image, and copy the champion jp-name to the clipboard")
+        ToolTip1.SetToolTip(Role_ListBox, "Choose any roles, and narrow the search")
     End Sub
+
+    ' **********************************************
+    ' **  関数名 : ロール状態取得                 **
+    ' **                                          **
+    ' **  引数1  : リストボックス                 **
+    ' **********************************************
+    Private Function GetRoleState(ByVal c As CheckedListBox) As Byte
+        Dim b As Byte = &H1  ' 00000001
+        Dim ret As Byte = 0
+        Dim i As Integer
+
+        For i = 0 To c.Items.Count - 1
+            If c.GetItemChecked(i) Then
+                ret += b << i
+            End If
+        Next
+
+        Return ret
+    End Function
 
     ' **********************************************
     ' **  関数名 : チャンプ名絞込                 **
@@ -275,10 +295,11 @@ Public Class Form1
     ' **  引数1  : レーン (省略可)                **
     ' **  引数2  : ロール (省略可)                **
     ' **********************************************
-    Private Sub SearchChamp(Optional ByVal l As Integer = 0, Optional ByVal r As Integer = 0)
+    Private Sub SearchChamp(Optional ByVal l As Integer = 0, Optional ByVal r As Byte = 0)
         Dim i As Integer
         Dim j As Integer
         Dim flg As Integer
+        Dim chkRole As Byte = 0
 
         ' 初期化
         Champions.Clear()
@@ -301,15 +322,10 @@ Public Class Form1
 
             ' ロール検索
             If r <> 0 Then
-                flg = 0
-                For j = 0 To 1
-                    If ChampList(i).Role(j) = r Then
-                        flg = 1
-                        Exit For
-                    End If
-                Next
-                ' ヒット無し
-                If flg = 0 Then
+                chkRole = ChampList(i).Role(0) Or ChampList(i).Role(1)
+
+                If (r And chkRole) = 0 Then
+                    ' ヒットなし
                     Continue For
                 End If
             End If
@@ -333,6 +349,15 @@ Public Class Form1
         rateForm = 1.0
 
         InitToolTip()
+
+        ' チェックボックス初期化
+        Role_ListBox.Items.Add("Assassin")
+        Role_ListBox.Items.Add("Fighter")
+        Role_ListBox.Items.Add("Mage")
+        Role_ListBox.Items.Add("Support")
+        Role_ListBox.Items.Add("Tank")
+        Role_ListBox.Items.Add("Marksman")
+        Role_ListBox.CheckOnClick = True
 
         ' 背景描画
         DrawBackPicture(SetBackURL(CType(Champions(0), String)))
@@ -668,18 +693,19 @@ Public Class Form1
         ChangeBtColor(CType(sender, Button), 0)
     End Sub
 
-    ' -- レーンコンボボックス
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
-        ' 色変更
-        Dim Combo As ComboBox = sender
-        Combo.BackColor = COMB_BK_COL(Combo.SelectedIndex)
-
+    ' **********************************************
+    ' **  関数名 : チャンプコンボボックス更新     **
+    ' **                                          **
+    ' **  引数1  : レーン（省略可）               **
+    ' **  引数2  : ロール（省略可）               **
+    ' **********************************************
+    Private Sub updateChampCombo(Optional ByVal l As Integer = 0, Optional ByVal r As Byte = 0)
         ' 直前に選択されていたチャンプ名
         Dim Bef_champ As String = ComboBox2.Text
         Debug.Print("Bef = " & ComboBox2.Text)
 
         ' -- チャンプ検索
-        SearchChamp(Combo.SelectedIndex)
+        SearchChamp(l, r)
 
         ' コンボボックス更新開始
         flgChampCombo = 1
@@ -698,6 +724,15 @@ Public Class Form1
             ' 直前に選択されていたチャンプ
             ComboBox2.SelectedIndex = Champions.IndexOf(Bef_champ)
         End If
+    End Sub
+
+    ' -- レーンコンボボックス
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        ' 色変更
+        Dim Combo As ComboBox = sender
+        Combo.BackColor = COMB_BK_COL(Combo.SelectedIndex)
+        updateChampCombo(Combo.SelectedIndex, GetRoleState(Role_ListBox))
+
     End Sub
 
     ' **********************************************
@@ -777,19 +812,34 @@ Public Class Form1
         e.DrawFocusRectangle()  'フォーカス背景色描画用
     End Sub
 
-    Private Sub Button_CopyJP_Click(sender As Object, e As EventArgs) Handles Button_CopyJP.Click
-        Clipboard.SetText(ChampList(ComboBox2.SelectedIndex).JpName)
-    End Sub
+    ' **********************************************
+    ' **  関数名 : チャンプ名変換（英→日）       **
+    ' **                                          **
+    ' **  引数1  : チャンプ名（英語）             **
+    ' **********************************************
+    Private Function TransEnToJp(e As String)
+        Dim i As Integer
+        Dim ret As String = ""
 
-    Private Sub Button_CopyJP_MouseEnter(sender As Object, e As EventArgs) Handles Button_CopyJP.MouseEnter
-        ChangeBtColor(CType(sender, Button), 1)
-    End Sub
+        For i = 0 To ChampList.Count - 1
+            If ChampList(i).Name = e Then
+                ret = ChampList(i).JpName
+                Exit For
+            End If
+        Next
 
-    Private Sub Button_CopyJP_MouseLeave(sender As Object, e As EventArgs) Handles Button_CopyJP.MouseLeave
-        ChangeBtColor(CType(sender, Button), 0)
-    End Sub
+        Return ret
+    End Function
 
     Private Sub CheckBox_Topmost_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_Topmost.CheckedChanged
         Me.TopMost = Not Me.TopMost
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+        Clipboard.SetText(TransEnToJp(ComboBox2.Text))
+    End Sub
+
+    Private Sub Role_ListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Role_ListBox.SelectedIndexChanged
+        updateChampCombo(ComboBox1.SelectedIndex, GetRoleState(CType(sender, CheckedListBox)))
     End Sub
 End Class

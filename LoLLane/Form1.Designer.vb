@@ -40,8 +40,8 @@ Partial Class Form1
         Me.Button_Mastery = New System.Windows.Forms.Button()
         Me.Button_Skill = New System.Windows.Forms.Button()
         Me.Button_Rune = New System.Windows.Forms.Button()
-        Me.Button_CopyJP = New System.Windows.Forms.Button()
         Me.CheckBox_Topmost = New System.Windows.Forms.CheckBox()
+        Me.Role_ListBox = New System.Windows.Forms.CheckedListBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -108,7 +108,7 @@ Partial Class Form1
         Me.Button_Counter.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Button_Counter.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button_Counter.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Button_Counter.Location = New System.Drawing.Point(717, 102)
+        Me.Button_Counter.Location = New System.Drawing.Point(717, 107)
         Me.Button_Counter.Name = "Button_Counter"
         Me.Button_Counter.Size = New System.Drawing.Size(90, 28)
         Me.Button_Counter.TabIndex = 5
@@ -120,7 +120,7 @@ Partial Class Form1
         Me.Build.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Build.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Build.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Build.Location = New System.Drawing.Point(312, 102)
+        Me.Build.Location = New System.Drawing.Point(312, 107)
         Me.Build.Name = "Build"
         Me.Build.Size = New System.Drawing.Size(90, 28)
         Me.Build.TabIndex = 6
@@ -155,7 +155,7 @@ Partial Class Form1
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(59, 12)
         Me.Label1.TabIndex = 9
-        Me.Label1.Text = "Ver.β.02"
+        Me.Label1.Text = "Ver.β.03"
         '
         'Label2
         '
@@ -179,7 +179,7 @@ Partial Class Form1
         Me.Button_Mastery.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Button_Mastery.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button_Mastery.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Button_Mastery.Location = New System.Drawing.Point(212, 102)
+        Me.Button_Mastery.Location = New System.Drawing.Point(212, 107)
         Me.Button_Mastery.Name = "Button_Mastery"
         Me.Button_Mastery.Size = New System.Drawing.Size(90, 28)
         Me.Button_Mastery.TabIndex = 11
@@ -191,7 +191,7 @@ Partial Class Form1
         Me.Button_Skill.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Button_Skill.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button_Skill.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Button_Skill.Location = New System.Drawing.Point(12, 102)
+        Me.Button_Skill.Location = New System.Drawing.Point(12, 107)
         Me.Button_Skill.Name = "Button_Skill"
         Me.Button_Skill.Size = New System.Drawing.Size(90, 28)
         Me.Button_Skill.TabIndex = 12
@@ -203,24 +203,12 @@ Partial Class Form1
         Me.Button_Rune.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Button_Rune.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button_Rune.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Button_Rune.Location = New System.Drawing.Point(112, 102)
+        Me.Button_Rune.Location = New System.Drawing.Point(112, 107)
         Me.Button_Rune.Name = "Button_Rune"
         Me.Button_Rune.Size = New System.Drawing.Size(90, 28)
         Me.Button_Rune.TabIndex = 13
         Me.Button_Rune.Text = "Rune"
         Me.Button_Rune.UseVisualStyleBackColor = False
-        '
-        'Button_CopyJP
-        '
-        Me.Button_CopyJP.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
-        Me.Button_CopyJP.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button_CopyJP.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Button_CopyJP.Location = New System.Drawing.Point(312, 56)
-        Me.Button_CopyJP.Name = "Button_CopyJP"
-        Me.Button_CopyJP.Size = New System.Drawing.Size(90, 28)
-        Me.Button_CopyJP.TabIndex = 14
-        Me.Button_CopyJP.Text = "CopyJP"
-        Me.Button_CopyJP.UseVisualStyleBackColor = False
         '
         'CheckBox_Topmost
         '
@@ -234,14 +222,25 @@ Partial Class Form1
         Me.CheckBox_Topmost.Text = "TopMost"
         Me.CheckBox_Topmost.UseVisualStyleBackColor = True
         '
+        'Role_ListBox
+        '
+        Me.Role_ListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(37, Byte), Integer))
+        Me.Role_ListBox.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Role_ListBox.ForeColor = System.Drawing.SystemColors.Window
+        Me.Role_ListBox.FormattingEnabled = True
+        Me.Role_ListBox.Location = New System.Drawing.Point(312, 9)
+        Me.Role_ListBox.Name = "Role_ListBox"
+        Me.Role_ListBox.Size = New System.Drawing.Size(103, 88)
+        Me.Role_ListBox.TabIndex = 16
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(819, 549)
+        Me.Controls.Add(Me.Role_ListBox)
         Me.Controls.Add(Me.CheckBox_Topmost)
-        Me.Controls.Add(Me.Button_CopyJP)
         Me.Controls.Add(Me.Button_Rune)
         Me.Controls.Add(Me.Button_Skill)
         Me.Controls.Add(Me.Button_Mastery)
@@ -281,6 +280,6 @@ Partial Class Form1
     Friend WithEvents Button_Skill As Button
     Friend WithEvents Button_Rune As Button
     Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents Button_CopyJP As Button
     Friend WithEvents CheckBox_Topmost As CheckBox
+    Friend WithEvents Role_ListBox As CheckedListBox
 End Class
