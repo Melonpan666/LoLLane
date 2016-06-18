@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing.Drawing2D
 
 Public Class Form1
-
+    'FFFF
     ' -- 定数
     ' -- レーン
     Private Const LANE_TOP As Integer = 1
