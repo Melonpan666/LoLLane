@@ -702,10 +702,26 @@ Public Class Form1
     Private Sub updateChampCombo(Optional ByVal l As Integer = 0, Optional ByVal r As Byte = 0)
         ' 直前に選択されていたチャンプ名
         Dim Bef_champ As String = ComboBox2.Text
+        Dim i As Integer
         Debug.Print("Bef = " & ComboBox2.Text)
 
         ' -- チャンプ検索
         SearchChamp(l, r)
+
+        If Champions.Count = 0 Then
+            ' -- チャンプなしの場合
+            MessageBox.Show("no match champion", "",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error)
+            ' レーン初期化
+            ComboBox1.SelectedIndex = 0
+            ' ロール初期化
+            For i = 0 To Role_ListBox.Items.Count - 1
+                Role_ListBox.SetItemChecked(i, False)
+            Next
+            ' チャンプコンボボックス初期化
+            SearchChamp()
+        End If
 
         ' コンボボックス更新開始
         flgChampCombo = 1
