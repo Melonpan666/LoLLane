@@ -1,5 +1,5 @@
 ﻿Imports System.Drawing.Drawing2D
-
+'Test
 Public Class Form1
 
     ' -- 定数
