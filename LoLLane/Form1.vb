@@ -60,6 +60,11 @@ Public Class Form1
     Private ChampList As New ArrayList
 
     '-- 変数宣言
+    ' 実行ファイルのフォルダパス
+    Private FolderName As String = Application.StartupPath
+    ' 設定ファイルパス
+    Private XlsxName As String = FolderName + "\ChampList.xlsx"
+
     Private Lanes() As String = {"", "Top", "Jungle", "Middle", "ADC", "Support"}
     Private Champions As New ArrayList
 
@@ -247,6 +252,91 @@ Public Class Form1
     End Sub
 
     ' **********************************************
+    ' **  関数名 : チャンプリスト読み込み         **
+    ' **                                          **
+    ' **  引数1  : エクセルファイル名             **
+    ' **********************************************
+    Private Function ReadChampList(ByVal c As String) As Integer
+        Debug.Print(c)
+        ' エクセルシート
+        Try
+            Using workbook As New ClosedXML.Excel.XLWorkbook(c)
+
+                Dim worksheet As ClosedXML.Excel.IXLWorksheet = workbook.Worksheet(1)
+                ' 列数
+                Dim lastRow As Integer = worksheet.LastRowUsed().RowNumber()
+                ' セル
+                Dim cell As ClosedXML.Excel.IXLCell
+                Dim c_champ As String
+                Dim c_jpchamp As String
+                Dim c_lane(4) As Integer
+                Dim c_role(1) As Byte
+
+                Dim i As Integer
+                Dim j As Integer
+                For i = 2 To lastRow
+                    ' 英語名
+                    c_champ = worksheet.Cell(i, 1).Value.ToString
+                    Debug.Print(c_champ)
+                    ' 日本語名
+                    c_jpchamp = worksheet.Cell(i, 2).Value.ToString
+                    Debug.Print(c_jpchamp)
+                    ' レーン名
+                    For j = 0 To c_lane.Count() - 1
+                        cell = worksheet.Cell(i, j + 3)
+                        Debug.Print(cell.Value)
+                        Select Case cell.Value.ToString
+                            Case "LANE_TOP"
+                                c_lane(j) = LANE_TOP
+                            Case "LANE_JUNGLE"
+                                c_lane(j) = LANE_JUNGLE
+                            Case "LANE_MID"
+                                c_lane(j) = LANE_MID
+                            Case "LANE_ADC"
+                                c_lane(j) = LANE_ADC
+                            Case "LANE_SUP"
+                                c_lane(j) = LANE_SUP
+                            Case Else
+                                c_lane(j) = 0
+                        End Select
+                    Next
+                    ' ロール名
+                    For j = 0 To c_role.Count() - 1
+                        cell = worksheet.Cell(i, j + 8)
+                        Debug.Print(cell.Value)
+                        Select Case cell.Value.ToString
+                            Case "ROLE_ASSASSIN"
+                                c_role(j) = ROLE_ASSASSIN
+                            Case "ROLE_FIGHTER"
+                                c_role(j) = ROLE_FIGHTER
+                            Case "ROLE_MAGE"
+                                c_role(j) = ROLE_MAGE
+                            Case "ROLE_SUPPORT"
+                                c_role(j) = ROLE_SUPPORT
+                            Case "ROLE_TANK"
+                                c_role(j) = ROLE_TANK
+                            Case "ROLE_MARKSMAN"
+                                c_role(j) = ROLE_MARKSMAN
+                            Case Else
+                                c_role(j) = 0
+                        End Select
+                    Next
+
+                    ' リスト追加
+                    ChampList.Add(New Champ(c_champ, c_jpchamp, c_lane(0), c_lane(1), c_lane(2), c_lane(3), c_lane(4), c_role(0), c_role(1)))
+                Next
+            End Using
+
+            ' -- コンボボックス更新
+            SearchChamp()
+        Catch ex As System.IO.FileNotFoundException
+            Return -1
+        End Try
+
+        Return 0
+    End Function
+
+    ' **********************************************
     ' **  関数名 : ツールチップ初期化             **
     ' **                                          **
     ' **  引数1  : なし                           **
@@ -339,7 +429,13 @@ Public Class Form1
     '-- フォーム初期化
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '-- 初期化
-        InitChamp()
+        Dim ret As Integer
+
+        ret = ReadChampList(XlsxName)
+        If ret <> 0 Then
+            MessageBox.Show("[" & XlsxName & "]" & " is not found")
+            InitChamp()
+        End If
         ComboBox1.DataSource = Lanes
         ComboBox2.DataSource = Champions
         flgChampCombo = 0

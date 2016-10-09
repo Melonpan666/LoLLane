@@ -155,7 +155,7 @@ Partial Class Form1
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(59, 12)
         Me.Label1.TabIndex = 9
-        Me.Label1.Text = "Ver.β.05"
+        Me.Label1.Text = "Ver.β.06"
         '
         'Label2
         '
@@ -166,7 +166,7 @@ Partial Class Form1
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(68, 12)
         Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Patch 6.15"
+        Me.Label2.Text = "Patch 6.20"
         '
         'TimerWeb2
         '
