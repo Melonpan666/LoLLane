@@ -1,5 +1,6 @@
-﻿Imports System.Drawing.Drawing2D
-'Test
+﻿'Imports System.Runtime.InteropServices
+'Imports System.Diagnostics
+
 Public Class Form1
     'FFFF
     ' -- 定数
@@ -17,11 +18,11 @@ Public Class Form1
     Private Const ROLE_TANK As Byte = &H10
     Private Const ROLE_MARKSMAN As Byte = &H20
     ' Web 検索文字列
-    Private Const SEARCH_BUILD As String = "Most Frequent Core Build"
-    Private Const SEARCH_COUNTER As String = "Weak Against"
-    Private Const SEARCH_MASTERY As String = "Most Frequent Masteries"
-    Private Const SEARCH_SKILL As String = "Most Frequent Skill Order"
-    Private Const SEARCH_RUNE As String = "Most Frequent Runes"
+    Protected Friend Const SEARCH_BUILD As String = "Most Frequent Core Build"
+    Protected Friend Const SEARCH_COUNTER As String = "Weak Against"
+    Protected Friend Const SEARCH_MASTERY As String = "Most Frequent Masteries"
+    Protected Friend Const SEARCH_SKILL As String = "Most Frequent Skill Order"
+    Protected Friend Const SEARCH_RUNE As String = "Most Frequent Runes"
     ' ボタン色
     Private BT_BACK_COL_DEF As Color = Color.FromArgb(24, 28, 29)
     Private BT_BACK_COL_ENT As Color = Color.DodgerBlue
@@ -33,6 +34,8 @@ Public Class Form1
     Private Const URL_LEFT_WEB As String = "https://champion.gg/champion/"
     Private Const URL_RIGHT_WEB As String = "http://www.championcounter.com/"
     Private Const URL_BACKIMAGE As String = "https://lolstatic-a.akamaihd.net/game-info/1.1.9/images/champion/backdrop/bg-"
+    ' LoLクライアントウインドウ名
+    Private Const LOL_WINDOWTITLE As String = "PVP.netクライアント"
 
     Private Structure Champ
         Public Name As String      ' チャンプ名
@@ -57,23 +60,23 @@ Public Class Form1
         End Sub
     End Structure
 
-    Private ChampList As New ArrayList
+    Protected Friend ChampList As New ArrayList
 
     '-- 変数宣言
     ' 実行ファイルのフォルダパス
-    Private FolderName As String = Application.StartupPath
+    Protected Friend FolderName As String = Application.StartupPath
     ' 設定ファイルパス
     Private XlsxName As String = FolderName + "\ChampList.xlsx"
 
     Private Lanes() As String = {"", "Top", "Jungle", "Middle", "ADC", "Support"}
-    Private Champions As New ArrayList
+    Protected Friend Champions As New ArrayList
 
     ' URL
     Private URI_lolcounter As Uri
     Private URI_champgg As Uri
 
     ' 検索中文字列
-    Private strSearchLeft As String = ""
+    Protected Friend strSearchLeft As String = ""
 
     ' 直前の表示URL
     Private Bef_URI1 As Uri
@@ -83,8 +86,8 @@ Public Class Form1
     Private flgChampCombo As Integer
 
     ' スクロールロックフラグ
-    Private flgScrollL As Integer
-    Private flgScrollR As Integer
+    Protected Friend flgScrollL As Integer
+    Protected Friend flgScrollR As Integer
 
     ' 表示倍率
     Private dRate As Decimal
@@ -337,6 +340,26 @@ Public Class Form1
     End Function
 
     ' **********************************************
+    ' **  関数名 : チャンプ名からチャンプリストの **
+    ' **           インデックスを返す             **
+    ' **                                          **
+    ' **  引数1  : チャンプ名                     **
+    ' **********************************************
+    Protected Friend Function idFromName(ByVal s As String) As Integer
+        Dim id As Integer = -1
+        Dim i As Integer
+
+        For i = 0 To ChampList.Count - 1
+            If ChampList(i).Name = s Then
+                id = i
+                Exit For
+            End If
+        Next
+
+        Return id
+    End Function
+
+    ' **********************************************
     ' **  関数名 : ツールチップ初期化             **
     ' **                                          **
     ' **  引数1  : なし                           **
@@ -346,18 +369,28 @@ Public Class Form1
         ToolTip1 = New ToolTip(Me.components)
         ' -- ToolTipの設定を行う
         'ToolTipが表示されるまでの時間
-        ToolTip1.InitialDelay = 1300
+        ToolTip1.InitialDelay = 1000
         'ToolTipが表示されている時に、別のToolTipを表示するまでの時間
-        ToolTip1.ReshowDelay = 1000
+        ToolTip1.ReshowDelay = 800
         'ToolTipを表示する時間
         ToolTip1.AutoPopDelay = 10000
         'フォームがアクティブでない時でもToolTipを表示する
         ToolTip1.ShowAlways = True
 
         'ToolTip設定
-        ToolTip1.SetToolTip(CheckBox_Topmost, "Display this window as top most")
-        ToolTip1.SetToolTip(PictureBox1, "Click the champion image, and copy the champion jp-name to the clipboard")
-        ToolTip1.SetToolTip(Role_ListBox, "Choose any roles, and narrow the search")
+        'ToolTip1.SetToolTip(CheckBox_Topmost, "Display this window as top most")
+        ToolTip1.SetToolTip(CheckBox_Topmost, "常に最前面に表示します。")
+        'ToolTip1.SetToolTip(PictureBox1, "Click the champion image, and copy the champion jp-name to the clipboard")
+        'ToolTip1.SetToolTip(Role_ListBox, "Choose any roles, and narrow the search")
+        ToolTip1.SetToolTip(Role_ListBox, "選択されているロールで絞込検索を行います。")
+        ToolTip1.SetToolTip(Button1, "レーンをランダムに選択します。")
+        ToolTip1.SetToolTip(Button2, "チャンピオンをランダムに選択します。")
+        ToolTip1.SetToolTip(Button3, "チャンピオンセレクト画面のチャット欄に選択中のレーンをコールします。")
+        ToolTip1.SetToolTip(Button4, "チャンピオンセレクト画面に選択中のチャンプを表示します。")
+        ToolTip1.SetToolTip(Button_Skill, "スキルオーダーを表示します。")
+        ToolTip1.SetToolTip(Button_Rune, "ルーンを表示します。")
+        ToolTip1.SetToolTip(Button_Mastery, "マスタリーを表示します。")
+        ToolTip1.SetToolTip(Build, "ビルドを表示します。")
     End Sub
 
     ' **********************************************
@@ -426,7 +459,10 @@ Public Class Form1
         Debug.Print("Count = " & Champions.Count & " Lane = " & ComboBox1.SelectedIndex)
     End Sub
 
-    '-- フォーム初期化
+    ' **********************************************
+    ' **  関数名 : フォーム初期化                 **
+    ' **                                          **
+    ' **********************************************
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '-- 初期化
         Dim ret As Integer
@@ -458,6 +494,16 @@ Public Class Form1
         ' 背景描画
         DrawBackPicture(SetBackURL(CType(Champions(0), String)))
 
+        'GroupBox1の親コントロールをPictureBox1とする
+        PictureBox1.Controls.Add(GroupBox1)
+
+        'GroupBox1の位置をPictureBox1内の位置に変更する
+        GroupBox1.Top = GroupBox1.Top - PictureBox1.Top
+        GroupBox1.Left = GroupBox1.Left - PictureBox1.Left
+
+        'Call Pick ボタン
+        CallPick.Text = "Call" & vbCrLf & "+" & vbCrLf & "Pick"
+
         ' サイズ固定
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
     End Sub
@@ -485,28 +531,33 @@ Public Class Form1
         'ImageオブジェクトのGraphicsオブジェクトを作成する
         Dim g As Graphics = Graphics.FromImage(canvas)
 
-        Dim request As System.Net.WebRequest =
+        Try
+            Dim request As System.Net.WebRequest =
             System.Net.WebRequest.Create(s)
-        Dim response As System.Net.WebResponse = request.GetResponse()
-        Dim responseStream As System.IO.Stream = response.GetResponseStream()
-        Dim image = New Bitmap(responseStream)
+            Dim response As System.Net.WebResponse = request.GetResponse()
+            Dim responseStream As System.IO.Stream = response.GetResponseStream()
+            Dim image = New Bitmap(responseStream)
 
-        '補間方法として高品質双三次補間を指定する
-        g.InterpolationMode =
+            '補間方法として高品質双三次補間を指定する
+            g.InterpolationMode =
             System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
-        '画像を縮小して描画する
-        g.DrawImage(image, pos_x, pos_y, CType(image.Width * dRate, Integer), CType(image.Height * dRate, Integer))
+            '画像を縮小して描画する
+            g.DrawImage(image, pos_x, pos_y, CType(image.Width * dRate, Integer), CType(image.Height * dRate, Integer))
 
-        'BitmapとGraphicsオブジェクトを破棄
-        image.Dispose()
-        g.Dispose()
+            'BitmapとGraphicsオブジェクトを破棄
+            image.Dispose()
+            g.Dispose()
 
-        'PictureBox1に表示する
-        PictureBox1.Image = canvas
+            'PictureBox1に表示する
+            PictureBox1.Image = canvas
 
-        response = Nothing
-        request = Nothing
-        responseStream = Nothing
+            response = Nothing
+            request = Nothing
+            responseStream = Nothing
+
+        Catch ex As System.Net.WebException
+            Return
+        End Try
     End Sub
 
     '-- Lane シャッフル
@@ -557,7 +608,7 @@ Public Class Form1
     ' **                                          **
     ' **  引数1  : 検索文字列                     **
     ' **********************************************
-    Private Sub OpenWebRight(ByVal s As String)
+    Protected Friend Sub OpenWebRight(ByVal s As String)
         ' スクロールロック中
         If flgScrollR = 0 Then
             Return
@@ -600,7 +651,7 @@ Public Class Form1
     ' **                                          **
     ' **  引数1  : 検索文字列                     **
     ' **********************************************
-    Private Sub OpenWebLeft(ByVal s As String)
+    Protected Friend Sub OpenWebLeft(ByVal s As String)
         ' スクロールロック中
         If flgScrollL = 0 Then
             Return
@@ -694,7 +745,7 @@ Public Class Form1
     ' **  引数1  : 対象Button                     **
     ' **  引数2  : フラグ(0:デフォ, 1:オン)       **
     ' **********************************************
-    Private Sub ChangeBtColor(ByRef b As Button, ByVal flg As Integer)
+    Protected Friend Sub ChangeBtColor(ByRef b As Button, ByVal flg As Integer)
         If flg = 1 Then     ' オン マウス
             b.BackColor = BT_BACK_COL_ENT
             b.ForeColor = BT_STR_COL_ENT
@@ -844,7 +895,6 @@ Public Class Form1
         Dim Combo As ComboBox = sender
         Combo.BackColor = COMB_BK_COL(Combo.SelectedIndex)
         updateChampCombo(Combo.SelectedIndex, GetRoleState(Role_ListBox))
-
     End Sub
 
     ' **********************************************
@@ -953,5 +1003,92 @@ Public Class Form1
 
     Private Sub Role_ListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Role_ListBox.SelectedIndexChanged
         updateChampCombo(ComboBox1.SelectedIndex, GetRoleState(CType(sender, CheckedListBox)))
+    End Sub
+
+    ' Call Laneボタン
+    Private Sub Button3_MouseEnter(sender As Object, e As EventArgs) Handles Button3.MouseEnter
+        ChangeBtColor(CType(sender, Button), 1)
+    End Sub
+
+    Private Sub Button3_MouseLeave(sender As Object, e As EventArgs) Handles Button3.MouseLeave
+        ChangeBtColor(CType(sender, Button), 0)
+    End Sub
+
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
+        Try
+            AppActivate(LOL_WINDOWTITLE)
+            SendKeys.SendWait("{TAB}{TAB}{TAB}{TAB}{TAB}")
+            If ComboBox1.Text = "" Then
+                SendKeys.SendWait("fill")
+            Else
+                SendKeys.SendWait(ComboBox1.Text)
+            End If
+            SendKeys.SendWait("{ENTER}")
+        Catch ex As System.ArgumentException
+            MessageBox.Show("LoLClient is not starting!")
+            Return
+        End Try
+    End Sub
+
+    ' Champ Pickボタン
+    Private Sub Button4_MouseEnter(sender As Object, e As EventArgs) Handles Button4.MouseEnter
+        ChangeBtColor(CType(sender, Button), 1)
+    End Sub
+
+    Private Sub Button4_MouseLeave(sender As Object, e As EventArgs) Handles Button4.MouseLeave
+        ChangeBtColor(CType(sender, Button), 0)
+    End Sub
+
+    Private Sub Button4_Click_1(sender As Object, e As EventArgs) Handles Button4.Click
+        Try
+            AppActivate(LOL_WINDOWTITLE)
+            SendKeys.SendWait("{TAB}")
+            Clipboard.SetText(TransEnToJp(ComboBox2.Text))
+            SendKeys.SendWait("^v")
+        Catch ex As System.ArgumentException
+            MessageBox.Show("LoLClient is not starting!")
+            Return
+        End Try
+    End Sub
+
+    ' Call & Pick ボタン
+    Private Sub CallPick_MouseEnter(sender As Object, e As EventArgs) Handles CallPick.MouseEnter
+        ChangeBtColor(CType(sender, Button), 1)
+    End Sub
+
+    Private Sub CallPick_MouseLeave(sender As Object, e As EventArgs) Handles CallPick.MouseLeave
+        ChangeBtColor(CType(sender, Button), 0)
+    End Sub
+
+    Private Sub CallPick_Click(sender As Object, e As EventArgs) Handles CallPick.Click
+        Try
+            AppActivate(LOL_WINDOWTITLE)
+
+            SendKeys.SendWait("{TAB}")
+            Clipboard.SetText(TransEnToJp(ComboBox2.Text))
+            SendKeys.SendWait("^v")
+
+            SendKeys.SendWait("{TAB}{TAB}{TAB}{TAB}")
+            If ComboBox1.Text = "" Then
+                SendKeys.SendWait("fill")
+            Else
+                SendKeys.SendWait(ComboBox1.Text)
+            End If
+            SendKeys.SendWait("{ENTER}")
+        Catch ex As System.ArgumentException
+            MessageBox.Show("LoLClient is not starting!")
+            Return
+        End Try
+    End Sub
+
+    Private Sub Button_ShowPanel_Click(sender As Object, e As EventArgs) Handles Button_ShowPanel.Click
+        'Form2クラスのインスタンスを作成する
+        Dim f As New Form2()
+        'Form2を表示する
+        'ここではモーダルダイアログボックスとして表示する
+        'オーナーウィンドウにMeを指定する
+        f.ShowDialog(Me)
+        'フォームが必要なくなったところで、Disposeを呼び出す
+        f.Dispose()
     End Sub
 End Class

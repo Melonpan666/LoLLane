@@ -42,7 +42,13 @@ Partial Class Form1
         Me.Button_Rune = New System.Windows.Forms.Button()
         Me.CheckBox_Topmost = New System.Windows.Forms.CheckBox()
         Me.Role_ListBox = New System.Windows.Forms.CheckedListBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.CallPick = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button_ShowPanel = New System.Windows.Forms.Button()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Button1
@@ -50,7 +56,7 @@ Partial Class Form1
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Button1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Button1.Location = New System.Drawing.Point(26, 20)
+        Me.Button1.Location = New System.Drawing.Point(12, 10)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(106, 28)
         Me.Button1.TabIndex = 0
@@ -64,7 +70,7 @@ Partial Class Form1
         Me.ComboBox1.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ComboBox1.ForeColor = System.Drawing.SystemColors.Window
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(151, 20)
+        Me.ComboBox1.Location = New System.Drawing.Point(124, 10)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(145, 27)
         Me.ComboBox1.TabIndex = 1
@@ -74,7 +80,7 @@ Partial Class Form1
         Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Button2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
-        Me.Button2.Location = New System.Drawing.Point(26, 55)
+        Me.Button2.Location = New System.Drawing.Point(12, 45)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(106, 28)
         Me.Button2.TabIndex = 2
@@ -87,11 +93,10 @@ Partial Class Form1
         Me.ComboBox2.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ComboBox2.ForeColor = System.Drawing.SystemColors.Window
         Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(151, 55)
+        Me.ComboBox2.Location = New System.Drawing.Point(124, 45)
         Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(145, 27)
+        Me.ComboBox2.Size = New System.Drawing.Size(144, 27)
         Me.ComboBox2.TabIndex = 3
-        Me.ComboBox2.Text = "Aatrox"
         '
         'WebBrowser1
         '
@@ -155,7 +160,7 @@ Partial Class Form1
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(59, 12)
         Me.Label1.TabIndex = 9
-        Me.Label1.Text = "Ver.β.06"
+        Me.Label1.Text = "Ver.β.07"
         '
         'Label2
         '
@@ -166,7 +171,7 @@ Partial Class Form1
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(68, 12)
         Me.Label2.TabIndex = 10
-        Me.Label2.Text = "Patch 6.20"
+        Me.Label2.Text = "Patch 6.21"
         '
         'TimerWeb2
         '
@@ -228,10 +233,73 @@ Partial Class Form1
         Me.Role_ListBox.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Role_ListBox.ForeColor = System.Drawing.SystemColors.Window
         Me.Role_ListBox.FormattingEnabled = True
-        Me.Role_ListBox.Location = New System.Drawing.Point(312, 9)
+        Me.Role_ListBox.Location = New System.Drawing.Point(276, 9)
         Me.Role_ListBox.Name = "Role_ListBox"
         Me.Role_ListBox.Size = New System.Drawing.Size(103, 88)
         Me.Role_ListBox.TabIndex = 16
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox1.Controls.Add(Me.CallPick)
+        Me.GroupBox1.Controls.Add(Me.Button4)
+        Me.GroupBox1.Controls.Add(Me.Button3)
+        Me.GroupBox1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.GroupBox1.ForeColor = System.Drawing.Color.Gold
+        Me.GroupBox1.Location = New System.Drawing.Point(388, 3)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(151, 95)
+        Me.GroupBox1.TabIndex = 17
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Champion Select"
+        '
+        'CallPick
+        '
+        Me.CallPick.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.CallPick.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.CallPick.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
+        Me.CallPick.Location = New System.Drawing.Point(100, 20)
+        Me.CallPick.Name = "CallPick"
+        Me.CallPick.Size = New System.Drawing.Size(45, 61)
+        Me.CallPick.TabIndex = 2
+        Me.CallPick.Text = "Call + Pick"
+        Me.CallPick.UseVisualStyleBackColor = False
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.Button4.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
+        Me.Button4.Location = New System.Drawing.Point(7, 53)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(88, 28)
+        Me.Button4.TabIndex = 1
+        Me.Button4.Text = "Pick Champ"
+        Me.Button4.UseVisualStyleBackColor = False
+        '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.Button3.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
+        Me.Button3.Location = New System.Drawing.Point(7, 20)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(88, 28)
+        Me.Button3.TabIndex = 0
+        Me.Button3.Text = "Call Lane"
+        Me.Button3.UseVisualStyleBackColor = False
+        '
+        'Button_ShowPanel
+        '
+        Me.Button_ShowPanel.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.Button_ShowPanel.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button_ShowPanel.ForeColor = System.Drawing.Color.FromArgb(CType(CType(137, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(162, Byte), Integer))
+        Me.Button_ShowPanel.Location = New System.Drawing.Point(124, 72)
+        Me.Button_ShowPanel.Name = "Button_ShowPanel"
+        Me.Button_ShowPanel.Size = New System.Drawing.Size(144, 24)
+        Me.Button_ShowPanel.TabIndex = 18
+        Me.Button_ShowPanel.Text = "Show Panel"
+        Me.Button_ShowPanel.UseVisualStyleBackColor = False
         '
         'Form1
         '
@@ -239,6 +307,8 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(24, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(819, 549)
+        Me.Controls.Add(Me.Button_ShowPanel)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Role_ListBox)
         Me.Controls.Add(Me.CheckBox_Topmost)
         Me.Controls.Add(Me.Button_Rune)
@@ -259,6 +329,7 @@ Partial Class Form1
         Me.Name = "Form1"
         Me.Text = "LoLLane"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -282,4 +353,9 @@ Partial Class Form1
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents CheckBox_Topmost As CheckBox
     Friend WithEvents Role_ListBox As CheckedListBox
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents Button4 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents CallPick As Button
+    Friend WithEvents Button_ShowPanel As Button
 End Class
